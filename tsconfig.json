@@ -14,8 +14,8 @@
     "resolveJsonModule": true,
     "baseUrl": "./src",
     "paths": {
-      "@GeneralTypes": ["../../types/general-types.d.ts"],
-      "@GraphqlTypes": ["../../types/graphql-types.d.ts"]
+      "@GeneralTypes": ["../types/general-types.d.ts"],
+      "@GraphqlTypes": ["../types/graphql-types.d.ts"]
     }
   },
   "compileOnSave": true,
