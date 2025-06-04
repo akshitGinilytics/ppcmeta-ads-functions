@@ -1,0 +1,27 @@
+{
+  "name": "@akshitginilytics/ppcmeta-types",
+  "version": "0.3.0",
+  "type": "module",
+  "packageManager": "npm@9.3.0",
+  "publishConfig": {
+    "access": "restricted",
+    "registry": "https://npm.pkg.github.com",
+    "directory": "dist",
+    "exclude": [
+      "src",
+      "test"
+    ]
+  },
+  "scripts": {
+    "build": "npm run generate",
+    "generate": "graphql-codegen --config codegen.yaml"
+  },
+  "types": "./dist/index.d.ts",
+  "description": "TypeScript types for PPCMeta",
+  "author": "Akshit Ginilytics",
+  "license": "ISC",
+  "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.6",
+    "@graphql-codegen/typescript-resolvers": "^4.5.1"
+  }
+}

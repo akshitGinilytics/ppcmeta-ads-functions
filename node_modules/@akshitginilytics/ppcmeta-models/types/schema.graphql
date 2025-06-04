@@ -1,0 +1,178 @@
+enum Roles {
+    manager
+    owner
+    specialist
+    viewer
+}
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+type Query {
+    backgroundJobs(jobIds: [String!]): [BackgroundJob]
+    googleAdsCustomers(customerIds:[String]): [GoogleAdsCustomer!]!
+    me: Me
+    team: Team
+    invites: [Invite!]
+    invite(inviteId: String!): Invite
+}
+
+type Mutation {
+    addCustomers(customerIds: [String!]!): [Customer!]!
+    removeCustomers(customersIds: [String!]!): String
+    addCampaigns(addCampaignInput: [AddCampaignInput!]!): [Campaign!]!
+    removeCampaigns(removeCampaignInput:[RemoveCampaignInput!]!): String
+    setTeam(teamId: String!): String!
+    setMonthlyBudget(thisMonthBudgets: [MonthlyBudgetInput!]!): Boolean!
+    sendInvite(inviteInput: InviteInput!): Invite,
+    getInvite(inviteId: String!): Invite,
+    acceptInvite(inviteId: String!): Invite
+    declineInvite(inviteId: String!): Invite,
+    renameTeam(name: String!): String!
+}
+
+type Me {
+    userId: ID!
+    created: Int!
+    defaultTeam: String!
+    displayName: String!
+    email: String!
+    teamsMembership: [TeamsMembership!]
+    customers: [GoogleAdsCustomer!],
+    hasGoogleAdsAccount: Boolean!
+}
+
+
+type Teammate {
+    displayName: String!
+    email: String!
+    userId: String!
+}
+
+
+type Campaign {
+    campaignSettings: CampaignSettings
+    campaignId: ID!
+    campaignBudget: CampaignBudget
+    metrics: Metrics
+    name: String!
+    resourceName: String!
+    status: String!
+}
+
+type Customer {
+    currency: String!
+    customerId: ID!
+    level: Int!
+    name: String!
+    timeZone: String!
+    campaigns: [Campaign!]
+    customerSettings: CustomerSettings
+}
+
+type GoogleAdsCustomer{
+    campaigns: [Campaign!]
+    currency: String!
+    customerId: ID!
+    level: Int!
+    name: String!
+    resourceName: String!
+    timeZone: String!
+}
+
+type Metrics {
+    allConversions: Float!
+    averageCPC: Float!
+    clicks: Int!
+    costMicros: Float!
+    impressions: Int!
+    xDaysAverageCost: Float!
+}
+
+type Team {
+    teamId: ID!
+    created: Int!
+    name: String!
+    ownerId: String!
+    members: [TeamMember!]!
+    customers(customerIds:[String!]): [Customer!]
+}
+
+type TeamMember {
+    displayName: String!
+    email: String!
+    id: String!
+    permission: Roles!
+}
+
+type TeamsMembership {
+    id: String!
+    name: String!
+    permission: Roles!
+}
+
+type User {
+    created: Int!
+    defaultTeam: String!
+    displayName: String!
+    email: String!
+    teamsMembership: [TeamsMembership!]
+    userId: String!
+}
+
+type CampaignBudget {
+    budgetId: ID!
+    amount_micros: Float!
+    resourceName: String!
+}
+
+type CampaignSettings {
+    campaignId: ID!
+    customerId: String!
+    isAdded: Boolean!
+    thisMonthBudget: Float
+}
+
+type CustomerSettings {
+    customerId: ID!
+    isAdded: Boolean!
+}
+
+type BackgroundJob {
+    id: ID!
+    status: String!
+    jobName: String!
+}
+
+type Invite {
+    inviteId: ID!
+    invitedBy: Teammate!
+    email: String!
+    teamId: String!
+    teamName: String!
+    role: Roles!
+    status: String!
+    created: Int!
+    updated: Int!
+}
+
+input AddCampaignInput {
+    customerId: ID!
+    campaignId: String!
+}
+
+input RemoveCampaignInput {
+    customerId: ID!
+    campaignsIds: [String!]!
+}
+
+input MonthlyBudgetInput {
+    campaignId: String!
+    thisMonthBudget: Float!
+}
+
+input InviteInput {
+    email: String!
+    role: Roles!
+}
