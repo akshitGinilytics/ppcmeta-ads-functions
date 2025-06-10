@@ -99,7 +99,6 @@ function convertStatusEnumToText(status) {
 }
 export default async function (user, customerId, customerTimezone, campaignIds = []) {
     await user.getUser();
-    console.log("Current user refresh token 2:", user.refreshToken);
     const customer = await user.getCustomerById(customerId);
     if (!customer) {
         throw new Error("Customer not found");
