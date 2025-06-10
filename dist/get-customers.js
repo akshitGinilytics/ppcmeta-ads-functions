@@ -117,6 +117,7 @@ export default async function (user) {
     const result = [];
     const client = createAdwordsClient();
     await user.getUser();
+    console.log("Current user refresh token 1:", user.refreshToken);
     if (!user.refreshToken) {
         console.error("user", user);
         throw Error("User refreshToken was not found in firestore.");
